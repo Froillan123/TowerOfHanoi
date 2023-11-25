@@ -6,31 +6,39 @@
     <title>Tower Of Hanoi</title>
 
     <link rel="shortcut icon" type="images/png" href="images/favicon.png">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+    <!-- Title Of The Content -->
     <div class="header" id="header">
-        <h1 class="title">Tower Of Hanoi</h1>
+
+        <center><h1 class="title">Tower Of Hanoi</h1></center>
     </div>
     
+    <!-- Here is the objectives of the game -->
     <section class="objectives" id="objectives">
         <h2 class="sub-title">Objectives: <span class="multiple-text"></span></h2>
     </section>
 
     <section class="section" id="section">
         <div id="discno">
-            Enter Number of Rings: <input type="number" id="box" max="6" min="3" value="3"></input>
+            Enter Number of Rings: <input type="number" id="box" max="8" min="3" value="3"></input>
+
           </div>
         <div class="moves"></div>
         <div id="autoSolve">
-            <button type="button" class="buttons">Solved</button>
+            <button type="button" class="buttons">Solve</button>
         </div>
         <div id="restart">
             <button type="button" class="buttons">Restart</button>
           </div>
     </section>
 
+    <!-- this div is creating a tower for the tower of hanoi -->
     <div class="towers" id="towers">
         <div class="container">
         <div class="t" value="0">
@@ -55,9 +63,11 @@
     </div>
     
 
-
+    <!-- my script tags -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
