@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add drag-and-drop listeners to the discs
     addDragListeners();
   }
-
+  
   // Function to add drag-and-drop event listeners to the discs
   function addDragListeners() {
     var discElements = document.querySelectorAll(".line1 li, .line2 li, .line3 li");
@@ -193,32 +193,40 @@ document.addEventListener('DOMContentLoaded', function () {
     if (stepIndex < solutionSteps.length) {
       var step = solutionSteps[stepIndex];
       moveDisc(step.source, step.target);
-      drawdiscs();
-      moves += 1;
-      document.querySelector(".moves").textContent = moves + " moves";
-
-      // If the puzzle is solved, display a message
-      if (solved()) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Congratulations!',
-          text: 'Puzzle solved with ' + moves + ' moves!',
-          customClass:
-          {
-            icon: 'sweetalert-icon',
-            title: 'sweetalert-title',
-            content: 'sweetalert-text',
-          },
-          width: window.innerWidth > 600 ? '500px' : '80%'
-        });
-        document.querySelector(".moves").textContent = "Solved with " + moves + " moves!";
-        solving = false;
-        return; 
-      }
-
-      stepIndex++;
-      // Use setTimeout for animation delay
-      setTimeout(autoSolveAnimation, 500); 
+  
+      // Apply the move-animation class to the moved disc
+      var discId = 'disc' + towers[step.target][0][towers[step.target][0].length - 1];
+      var discElement = document.getElementById(discId);
+      discElement.classList.add('move-animation');
+  
+      // Remove the class after the animation duration
+      setTimeout(function () {
+        discElement.classList.remove('move-animation');
+        drawdiscs();
+        moves += 1;
+        document.querySelector(".moves").textContent = moves + " moves";
+  
+        // If the puzzle is solved, display a message
+        if (solved()) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Congratulations!',
+            text: 'Puzzle solved with ' + moves + ' moves!',
+            customClass: {
+              icon: 'sweetalert-icon',
+              title: 'sweetalert-title',
+              content: 'sweetalert-text',
+            },
+            width: window.innerWidth > 600 ? '500px' : '80%'
+          });
+          document.querySelector(".moves").textContent = "Solved with " + moves + " moves!";
+          solving = false;
+        } else {
+          stepIndex++;
+          // Use a delay before the next animation step
+          setTimeout(autoSolveAnimation, 300);
+        }
+      }, 300); // Adjust the timeout to match the animation duration
     } else {
       solving = false;
     }
@@ -226,7 +234,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Event handler for the restart button
   document.getElementById("restart").addEventListener("click", function () {
-    init();
+    // Check if the entered value is within the specified range
+    var enteredValue = parseInt(document.getElementById('box').value, 10);
+    var minValue = parseInt(document.getElementById('box').min, 10);
+    var maxValue = parseInt(document.getElementById('box').max, 10);
+  
+    if (isNaN(enteredValue) || enteredValue < minValue || enteredValue > maxValue) {
+      // Display SweetAlert error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Invalid Input',
+        text: 'Please enter a value between ' + minValue + ' and ' + maxValue + '.',
+        customClass:
+        {
+          icon: 'sweetalert-icon',
+          title: 'sweetalert-title',
+          content: 'sweetalert-text',
+        },
+        width: window.innerWidth > 600 ? '500px' : '80%'
+      });
+    } else {
+      // If the input is valid, initialize the game state
+      init();
+    }
   });
 
   // Event handler for the autoSolve button

@@ -192,6 +192,9 @@ section
 .line3 li {
     transition: all .5s ease-in-out;
 }
+
+
+
   #towers li {
     position: relative;
     display: block;
@@ -252,6 +255,8 @@ section
     margin: -40px 0 0 -10px;
     cursor: grabbing;
   }
+
+
 
 
 @media(max-width: 1200px)
