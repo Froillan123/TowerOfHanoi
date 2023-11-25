@@ -74,6 +74,18 @@ $(document).ready(function () {
     $(".moves").text(moves + " moves");
   }
 
+  function deepCopy(arr) {
+    var copy = [];
+    for (var i = 0; i < arr.length; i++) {
+      if (Array.isArray(arr[i])) {
+        copy[i] = deepCopy(arr[i]);
+      } else {
+        copy[i] = arr[i];
+      }
+    }
+    return copy;
+  }
+  
   function handle(tower) {
     if (hold === null && !solving) {
       if (!jQuery.isEmptyObject(towers[tower][0])) {
@@ -82,14 +94,22 @@ $(document).ready(function () {
       }
     } else {
       if (!solving) {
+        // Create a copy of towers before the move using deepCopy
+        var towersCopy = deepCopy(towers);
+  
         var move = moveDisc(hold, tower);
         moves += 1;
         $(".moves").text(moves + " moves");
+  
         if (move == 1) {
           drawdiscs();
         } else {
+          // Restore towers to the previous state
+          towers = towersCopy;
+          drawdiscs();
           alert("You can't place a bigger ring on a smaller one");
         }
+  
         hold = null;
       }
     }
