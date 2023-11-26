@@ -1,3 +1,5 @@
+
+/*This is my styling goes*/
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 *
 {
@@ -193,6 +195,17 @@ section
     transition: all .5s ease-in-out;
 }
 
+.line1 li span,
+.line2 li span,
+.line3 li span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--second-bg-color);  
+  font-size: 14px;  
+  font-weight: bold;
+}
 
 
   #towers li {
@@ -257,8 +270,7 @@ section
   }
 
 
-
-
+/* Media querry for flexible for any device */
 @media(max-width: 1200px)
 {
   html

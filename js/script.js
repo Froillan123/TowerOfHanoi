@@ -30,11 +30,17 @@ document.addEventListener('DOMContentLoaded', function () {
           discElement.id = 'disc' + towers[i][0][j];
           discElement.value = towers[i][0][j];
           discElement.draggable = true;
+  
+          // Create a span for displaying the number in the center of the disc
+          var numberSpan = document.createElement("span");
+          numberSpan.textContent = towers[i][0][j];
+          numberSpan.classList.add("disc-number");
+          discElement.appendChild(numberSpan);
+  
           towers[i][1].appendChild(discElement);
         }
       }
     }
-    // Add drag-and-drop listeners to the discs
     addDragListeners();
   }
   
@@ -62,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
+  
   var towersCopy;
 
   // Function to initialize the game state
@@ -79,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
     stepIndex = 0;
     solutionSteps = [];
     for (var i = discs; i > 0; i--) towers[0][0].push(i);
-    drawdiscs();
+    drawdiscs(); // This function draw the disk or rings in order to initialize it when the game starts
     document.querySelector(".moves").textContent = moves + " moves";
   }
 
@@ -98,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to handle user interactions with the towers
   function handle(tower) {
-    if (solved()) {
+    if (solved()) { //This will error trap if the user press the disk or the tower if the puzzle is solve
       Swal.fire({
         icon: 'warning',
         title: 'Puzzle Solved',
@@ -128,10 +135,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (move == 1) {
           drawdiscs();
         } else {
-          // Restore towers to the previous state if the move is not valid
           towers = towersCopy;
           drawdiscs();
-          // Replace alert with SweetAlert
           Swal.fire({
             title: 'Invalid Move',
             icon: 'error',
@@ -236,10 +241,10 @@ document.addEventListener('DOMContentLoaded', function () {
           solving = false;
         } else {
           stepIndex++;
-          // Use a delay before the next animation step
+          //Set Animation Delay for Auto Solve 
           setTimeout(autoSolveAnimation, 300);
         }
-      }, 300); // Adjust the timeout to match the animation duration
+      }, 300); 
     } else {
       solving = false;
     }
@@ -275,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Event handler for the autoSolve button
   document.getElementById("autoSolve").addEventListener("click", function () {
     if (solved()) {
-      Swal.fire({
+      Swal.fire({  
         icon: 'warning',
         title: 'Puzzle Solved',
         text: 'Please restart the game',
@@ -331,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Check if the entered value is within the specified range
       if (isNaN(enteredValue) || enteredValue < minValue || enteredValue > maxValue) {
-        // Display SweetAlert error message
+        // Display error message
         Swal.fire({
           icon: 'error',
           title: 'Invalid Input',
@@ -345,7 +350,6 @@ document.addEventListener('DOMContentLoaded', function () {
           width: window.innerWidth > 600 ? '500px' : '80%'
         });
 
-        // Prevent the default behavior of the Enter key (form submission)
         event.preventDefault();
       }
     }
@@ -355,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-//This is my scroll reveal when the page is load
+//This is my scroll reveal when the page is loaded
 
 ScrollReveal({ 
   // reset: true,
