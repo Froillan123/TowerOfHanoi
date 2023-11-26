@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Define variables to store the state of the towers, moves, discs, etc.
+
   var towers = [
       [[], document.querySelector(".line1")],
       [[], document.querySelector(".line2")],
@@ -61,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
+  var towersCopy;
 
   // Function to initialize the game state
   function init() {
@@ -96,6 +98,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to handle user interactions with the towers
   function handle(tower) {
+    if (solved()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Puzzle Solved',
+        text: 'Please restart the game',
+        customClass: {
+          icon: 'sweetalert-icon',
+          title: 'sweetalert-title',
+          content: 'sweetalert-text',
+        }
+      });
+      return;
+    }
+  
     if (hold === null && !solving) {
       if (towers[tower][0].length > 0) {
         hold = tower;
@@ -117,12 +133,10 @@ document.addEventListener('DOMContentLoaded', function () {
           drawdiscs();
           // Replace alert with SweetAlert
           Swal.fire({
-
             title: 'Invalid Move',
             icon: 'error',
             text: "You can't place a bigger ring on a smaller one",
-            customClass:
-            {
+            customClass: {
               icon: 'sweetalert-icon',
               title: 'sweetalert-title',
               content: 'sweetalert-text',
@@ -140,8 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
         icon: 'success',
         title: 'Congratulations!',
         text: 'Puzzle solved with ' + moves + ' moves!',
-        customClass:
-        {
+        customClass: {
           icon: 'sweetalert-icon',
           title: 'sweetalert-title',
           content: 'sweetalert-text',
@@ -261,6 +274,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Event handler for the autoSolve button
   document.getElementById("autoSolve").addEventListener("click", function () {
+    if (solved()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Puzzle Solved',
+        text: 'Please restart the game',
+        customClass: {
+          icon: 'sweetalert-icon',
+          title: 'sweetalert-title',
+          content: 'sweetalert-text',
+        }
+      });
+      return;
+    }
+  
     if (!solving) {
       solving = true;
       autoSolveStep(discs, 0, 2, 1);
@@ -340,5 +367,3 @@ ScrollReveal({
 ScrollReveal().reveal('.title', { origin: 'top' });
 ScrollReveal().reveal('.towers',  { origin: 'bottom' });
 ScrollReveal().reveal('.section, .objectives',  { origin: 'left' });
-
-
